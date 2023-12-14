@@ -28,3 +28,23 @@ Review.belongsTo(Manga)
 
 User.belongsToMany(Manga, { through: Rating });
 Manga.belongsToMany(User, { through: Rating });
+
+sequelize.sync({ force: true })
+    .then(async () => {
+        await setRoles(Role)
+        await setUsers(User)
+        await setmanga(Manga)
+        await setRating(Rating)
+        await setReview(Review)
+     
+    })
+    .catch(error => {
+        console.log(error)
+    })
+
+    sequelize.authenticate()
+    .then(() => console.log('La connexion à la base de données a bien été établie.'))
+    .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
+
+
+module.exports = { Manga, User, Role, Review, Rating }
