@@ -1,18 +1,20 @@
 const users = [
     {
         username: "",
-        password: "mdp",
+        password: "",
         mail:""
         RoleId: 1
     },
     {
         username: "",
-        password: "mdp",
+        password: "",
+        mail:""
         RoleId: 2
     },
     {
-        username: "antoinedupont",
-        password: "mdp",
+        username: "",
+        password: "",
+        mail:""
         RoleId: 3
     }
 ];
