@@ -1,20 +1,20 @@
 const users = [
     {
-        username: "",
-        password: "",
-        mail:""
+        username: "Den",
+        password: "mdp",
+        mail:"den@mail.com",
         RoleId: 1
     },
     {
-        username: "",
-        password: "",
-        mail:""
+        username: "Zhedd",
+        password: "motdepasse",
+        mail:"zhedd@mail.com",
         RoleId: 2
     },
     {
-        username: "",
-        password: "",
-        mail:""
+        username: "Frey",
+        password: "wordpass",
+        mail:"frey@mail.com",
         RoleId: 3
     }
 ];

@@ -1,8 +1,11 @@
+
 const MangaModel = require('../models/mangaModel')
 const UserModel = require('../models/userModel')
 const RatingModel = require('../models/ratingModel')
 const ReviewModel = require('../models/reviewModel')
 const { Sequelize, DataTypes } = require('sequelize');
+const roleModel = require('../models/roleModel');
+const { setRoles, setUsers, setMangas } = require('./setDataSample');
 
 
 const sequelize = new Sequelize('manga_note', 'root', '', {
@@ -11,7 +14,7 @@ const sequelize = new Sequelize('manga_note', 'root', '', {
     logging: false
 });
 
-const Role = RoleModel(sequelize, DataTypes)
+const Role = roleModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)
 const Manga = MangaModel(sequelize, DataTypes)
 const Review = ReviewModel(sequelize, DataTypes)
@@ -33,9 +36,8 @@ sequelize.sync({ force: true })
     .then(async () => {
         await setRoles(Role)
         await setUsers(User)
-        await setmanga(Manga)
-        await setRating(Rating)
-        await setReview(Review)
+        await setMangas(Manga)
+      
      
     })
     .catch(error => {
