@@ -3,7 +3,7 @@ const { UniqueConstraintError, ValidationError, QueryTypes } = require('sequeliz
 const { Manga, User, Review, sequelize } = require('../db/sequelizeSetup')
 
 const findAllMangas = (req, res) => {
-    // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un coworking
+    // paramètre optionnel qui permet d'ajouter les données relatives aux commentaires d'un manga
     Manga.findAll({ include: [Review, User] })
         .then((results) => {
             res.json(results)
@@ -61,29 +61,30 @@ const createManga = (req, res) => {
         })
 }
 
-// const createMangaWithImg = (req, res) => {
-//     User.findOne({ where: { username: req.username } })
-//         .then(user => {
-//             if (!user) {
-//                 return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
-//             }//---------------------------------------------------------------http----------//----localhost3000---/images/--nom de l'imageavec extension
-//             const newManga = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
+const createMangaWithImg = (req, res) => {
+    User.findOne({ where: { username: req.username } })
+        .then(user => {
+            console.log(user)
+            if (!user) {
+                return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
+            }//---------------------------------------------------------------http----------//----localhost3000---/images/--nom de l'imageavec extension
+            const newManga = { ...req.body, UserId: user.id, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` }
 
-//             Manga.create(newManga)
-//                 .then((manga) => {
-//                     res.status(201).json({ message: 'Le manga a bien été créé', data: manga })
-//                 })
-//                 .catch((error) => {
-//                     if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-//                         return res.status(400).json({ message: error.message })
-//                     }
-//                     res.status(500).json({ message: `Le manga n'a pas pu être créé`, data: error.message })
-//                 })
-//         })
-//         .catch(error => {
-//             res.status(500).json(error.message)
-//         })
-// }
+            Manga.create(newManga)
+                .then((manga) => {
+                    res.status(201).json({ message: 'Le manga a bien été créé', data: manga })
+                })
+                .catch((error) => {
+                    if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                        return res.status(400).json({ message: error.message })
+                    }
+                    res.status(500).json({ message: `Le manga n'a pas pu être créé`, data: error.message })
+                })
+        })
+        .catch(error => {
+            res.status(500).json(error.message)
+        })
+}
 
 const updateManga = (req, res) => {
     Manga.findByPk(req.params.id)
@@ -105,25 +106,25 @@ const updateManga = (req, res) => {
         })
 }
 
-// const updateMangaWithImg = (req, res) => {
-//     Manga.findByPk(req.params.id)
-//         .then((result) => {
-//             if (result) {
-//                 return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` })
-//                     .then(() => {
-//                         res.status(201).json({ message: 'Le manga a bien été mis à jour.', data: result })
-//                     })
-//             } else {
-//                 res.status(404).json({ message: `Aucun manga à mettre à jour n'a été trouvé.` })
-//             }
-//         })
-//         .catch(error => {
-//             if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-//                 return res.status(400).json({ message: error.message })
-//             }
-//             res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
-//         })
-// }
+const updateMangaWithImg = (req, res) => {
+    Manga.findByPk(req.params.id)
+        .then((result) => {
+            if (result) {
+                return result.update({ ...req.body, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` })
+                    .then(() => {
+                        res.status(201).json({ message: 'Le manga a bien été mis à jour.', data: result })
+                    })
+            } else {
+                res.status(404).json({ message: `Aucun manga à mettre à jour n'a été trouvé.` })
+            }
+        })
+        .catch(error => {
+            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message })
+            }
+            res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
+        })
+}
 
 const deleteManga = (req, res) => {
     // A. On vérifie que l'id passé en req.params.id renvoie bien une ligne de notre table.
@@ -147,4 +148,4 @@ const deleteManga = (req, res) => {
         })
 }
 
-module.exports = { findAllMangas, findMangaByPk, createManga, updateManga, deleteManga, findAllMangasRawSQL }
+module.exports = { findAllMangas, findMangaByPk, createManga, updateManga, deleteManga, findAllMangasRawSQL, createMangaWithImg, updateMangaWithImg  }

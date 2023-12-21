@@ -20,8 +20,11 @@ module.exports = (sequelize, DataTypes) => {
 
             type: DataTypes.STRING,
         },
-      
-    }, {
+        imageUrl:{
+            type: DataTypes.STRING,
+        }        
+        
+        },{
         onDelete: 'CASCADE'
     }
     );

@@ -27,6 +27,8 @@ app.use('/api/mangas', mangaRouter)
 app.use('/api/users', userRouter)
 app.use('/api/reviews', reviewRouter)
 
+// app.use('/images', express.static(__dirname + '/images'));
+
 app.use('/images', express.static(__dirname + '/images'));
 
 app.listen(port, () => {

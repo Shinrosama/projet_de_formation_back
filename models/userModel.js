@@ -16,10 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         mail : {
             type: DataTypes.STRING,
             validate:{
-                msg: "veuillez enter une adresse mail",
-                isEmail: true,
+                
+                isEmail: true
             }
-
         },
         password: {
             type: DataTypes.STRING,
@@ -28,8 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         onDelete: 'CASCADE',
         defaultScope: {
-            attributes: { exclude: ['password'] }
+            withoutPassword: 
+            {attributes: { exclude: ['password'] }}
+        },scopes: {
+            withPassword: {
+                attributes: {
+    
+                }
+            }
         }
     }
+     
     );
 }

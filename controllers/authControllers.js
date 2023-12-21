@@ -1,7 +1,7 @@
 const { User, Role } = require('../db/sequelizeSetup')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-// const SECRET_KEY = require('../configs/tokenData')
+const SECRET_KEY = require('../configs/tokenData')
 
 const rolesHierarchy = {
     edit: ["edit"],
@@ -28,7 +28,7 @@ const login = (req, res) => {
                     }, SECRET_KEY, { expiresIn: '10h' });
 
                     // Possibilité de stocker le jwt dans un cookie côté client
-                    // res.cookie('coworkingapi_jwt', token)
+                    // res.cookie('mangaapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
                 })
         })
@@ -45,16 +45,16 @@ const protect = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1]
 
     // Possibilité de stocker le jwt dans un cookie côté client
-    // if (!req.cookies.coworkingapi_jwt) {
+    // if (!req.cookies.mangaapi_jwt) {
     //     return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
     // }
 
-    // const token = req.cookies.coworkingapi_jwt
+    // const token = req.cookies.mangaapi_jwt
 
     if (token) {
         try {
-            // const decoded = jwt.verify(token, SECRET_KEY);
-            // req.username = decoded.data
+            const decoded = jwt.verify(token, SECRET_KEY);
+            req.username = decoded.data
             next()
         } catch (error) {
             return res.status(403).json({ message: `Le token n'est pas valide.` })
@@ -89,7 +89,7 @@ const restrict = (labelRole) => {
     }
 }
 
-// Implémenter le middleware qui sera utilisé sur updateCoworking et deleteCoworking, qui permmettra d'interagir sur la ressource seulement si on en est l'auteur. Si ce n'est pas le cas, on renvoie une erreur 403.
+// Implémenter le middleware qui sera utilisé sur updateManga et deleteManga, qui permmettra d'interagir sur la ressource seulement si on en est l'auteur. Si ce n'est pas le cas, on renvoie une erreur 403.
 const restrictToOwnUser = (model) => {
     return (req, res, next) => {
         User.findOne(
