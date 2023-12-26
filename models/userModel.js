@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
         },
-        mail : {
-            type: DataTypes.STRING,
-            validate:{
+        // mail : {
+        //     type: DataTypes.STRING,
+        //     validate:{
                 
-                isEmail: true
-            }
-        },
+        //         isEmail: true
+        //     }
+        // },
         password: {
             type: DataTypes.STRING,
             allowNull: false
