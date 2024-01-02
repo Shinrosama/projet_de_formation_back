@@ -27,7 +27,15 @@ const setUsers = (User) => {
 }
 
 const setRoles = (Role) => {
-    return Promise.all([Role.create({ label: "superadmin" }), Role.create({ label: "admin" }), Role.create({ label: "edit" })])
+    return Promise.all(
+        [Role.create({ label: "superadmin" }), 
+        Role.create({ label: "admin" }), 
+        Role.create({ label: "edit" })]
+        )
 }
 
-module.exports = {setRoles, setUsers, setMangas}
+const setReviews = (Review) => {
+    Review.create({ content: "yahoo ", rating: "3" })
+}
+
+module.exports = {setRoles, setUsers, setMangas, setReviews}

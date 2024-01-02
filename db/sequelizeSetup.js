@@ -28,7 +28,7 @@ Review.belongsTo(User)
 
 Manga.hasMany(Review, {
     foreignKey: {
-      allowNull: false,
+      allowNull: true,
     },
   });
 Review.belongsTo(Manga)
