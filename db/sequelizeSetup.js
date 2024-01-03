@@ -26,11 +26,7 @@ User.belongsTo(Role)
 User.hasMany(Review)
 Review.belongsTo(User)
 
-Manga.hasMany(Review, {
-    foreignKey: {
-      allowNull: true,
-    },
-  });
+Manga.hasMany(Review)
 Review.belongsTo(Manga)
 
 User.belongsToMany(Manga, { through: Rating });
