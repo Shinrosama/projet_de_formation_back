@@ -23,8 +23,9 @@ const login = (req, res) => {
                     if (!isValid) {
                         return res.status(401).json({ message: `Le mot de passe n'est pas valide.` })
                     }
-                    const token = jwt.sign({
-                        data: result.username
+                      const token = jwt.sign({
+                        data: result.username, 
+                        dataId: result.id
                     }, SECRET_KEY, { expiresIn: '10h' });
 
                     // Possibilité de stocker le jwt dans un cookie côté client
