@@ -19,6 +19,18 @@ app.get('/', (req, res) => {
     res.json('Hello World !')
 })
 
+app.put('/api/users/:userId', async (req, res) => {
+    try {
+      // Logic to update password
+      // ...
+  
+      res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+      console.error('Error updating password:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
 const mangaRouter = require('./routes/mangaRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reviewRoutes')
