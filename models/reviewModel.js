@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         rating: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            // allowNull: false,
             validate: {
                 min: {
                     msg: `La note ne peut pas être inférieur à 0`,
