@@ -1,48 +1,40 @@
-const express = require('express')
-const morgan = require('morgan')
-const cors = require("cors")
+const express = require('express');
+// Middleware pour la journalisation des requêtes HTTP
+const morgan = require('morgan');
+// Middleware pour gérer les autorisations d'accès depuis différentes sources
+const cors = require("cors"); 
 
-const app = express()
-const port = 3005
+const app = express();
+const port = 3005;
 
-// const { sequelize } = require('./db/sequelizeSetup')
+// Middleware pour traiter les données au format JSON
+app.use(express.json());
 
-app.use(express.json())
-app.use(cors())
-app.use(morgan('dev'))
+// Middleware pour gérer les autorisations CORS
+app.use(cors());
 
+// Middleware pour la journalisation en mode développement
+app.use(morgan('dev'));
 
-
+// Route de base renvoyant "Hello World !" en réponse à une requête GET
 app.get('/', (req, res) => {
+    res.json('Hello World !');
+});
 
+// Import des routes définies dans les fichiers mangaRoutes, userRoutes, et reviewRoutes
+const mangaRouter = require('./routes/mangaRoutes');
+const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
-    res.json('Hello World !')
-})
+// Utilisation des routes importées
+app.use('/api/mangas', mangaRouter);
+app.use('/api/users', userRouter);
+app.use('/api/reviews', reviewRouter);
 
-app.put('/api/users/:userId', async (req, res) => {
-    try {
-      // Logic to update password
-      // ...
-  
-      res.json({ message: 'Password updated successfully' });
-    } catch (error) {
-      console.error('Error updating password:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-
-const mangaRouter = require('./routes/mangaRoutes')
-const userRouter = require('./routes/userRoutes')
-const reviewRouter = require('./routes/reviewRoutes')
-
-app.use('/api/mangas', mangaRouter)
-app.use('/api/users', userRouter)
-app.use('/api/reviews', reviewRouter)
-
-// app.use('/images', express.static(__dirname + '/images'));
-
+// Middleware pour servir des images statiques depuis le répertoire '/images'
 app.use('/images', express.static(__dirname + '/images'));
 
+// L'application écoute sur le port défini
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+    console.log(`Example app listening on port ${port}`);
+});
