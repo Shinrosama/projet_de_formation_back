@@ -54,7 +54,6 @@ const updateUser = (req, res) => {
                     return bcrypt.hash(req.body.password, 10)
                         .then((hash) => {
                             req.body.password = hash
-
                             // On empêche l'utilisateur de mettre à jour son username
                             req.body.username = result.username
 

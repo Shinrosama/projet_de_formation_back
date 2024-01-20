@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require("cors"); 
 
 const app = express();
+// definition de l'ecoute sur le port 3005
 const port = 3005;
 
 // Middleware pour traiter les données au format JSON
