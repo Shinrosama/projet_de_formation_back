@@ -1,9 +1,7 @@
 // Ce module définit le modèle de données Sequelize pour un manga.
 // Il exporte une fonction prenant en paramètres l'instance Sequelize et le type de données Sequelize.
-
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('Manga', { // Définition du modèle 'Manga'
-        
         // Champ 'title' : chaîne de caractères non nulle et unique
         title: {
             type: DataTypes.STRING,

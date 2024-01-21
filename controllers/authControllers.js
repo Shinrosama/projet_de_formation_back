@@ -29,8 +29,6 @@ const login = (req, res) => {
                         role: result.RoleId
                     }, SECRET_KEY, { expiresIn: '10h' });
 
-                    // Possibilité de stocker le jwt dans un cookie côté client
-                    // res.cookie('mangaapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
                 })
         })
@@ -46,13 +44,6 @@ const protect = (req, res, next) => {
 
     const token = req.headers.authorization.split(' ')[1]
 
-    // Possibilité de stocker le jwt dans un cookie côté client
-    // if (!req.cookies.mangaapi_jwt) {
-    //     return res.status(401).json({ message: `Vous n'êtes pas authentifié.` })
-    // }
-
-    // const token = req.cookies.mangaapi_jwt
-
     if (token) {
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
@@ -63,7 +54,6 @@ const protect = (req, res, next) => {
         }
     }
 }
-
 // Ajouter le paramètre labelRole
 const restrict = (labelRole) => {
     return (req, res, next) => {
@@ -90,8 +80,7 @@ const restrict = (labelRole) => {
             })
     }
 }
-
-// Implémenter le middleware qui sera utilisé sur updateManga et deleteManga, qui permmettra d'interagir sur la ressource seulement si on en est l'auteur. Si ce n'est pas le cas, on renvoie une erreur 403.
+// Implémenter le middleware qui sera utilisé sur updateManga et deleteManga, qui permmettra d'interagir sur la ressource seulement si on en est l'auteur.
 const restrictToOwnUser = (model) => {
     return (req, res, next) => {
         User.findOne(

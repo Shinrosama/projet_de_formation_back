@@ -6,7 +6,6 @@ const { Sequelize, DataTypes } = require('sequelize');
 const roleModel = require('../models/roleModel');
 const { setRoles, setUsers, setMangas } = require('./setDataSample');
 
-
 // Configuration de la connexion à la base de données MariaDB
 const sequelize = new Sequelize('manga_note', 'root', '', {
     host: 'localhost',
